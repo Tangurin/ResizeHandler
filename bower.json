@@ -1,0 +1,21 @@
+{
+  "name": "ResizeHandler",
+  "main": "ResizeHandler.js",
+  "homepage": "https://github.com/Tangurin/ResizeHandler",
+  "authors": [
+    "Albert <albert@engvie.se>"
+  ],
+  "description": "JavaScript Class for resize window handling",
+  "keywords": [
+    "ResizeHandler"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
