@@ -33,9 +33,6 @@ var ResizeHandler = {
             }
         }, ResizeHandler.onEndWaitTime);
     },
-    onResizeStop: function() {
-
-    },
     onResize: function(callback) {
         if (typeof callback == 'function') {
             ResizeHandler.callbacks.onResize.push(callback);
