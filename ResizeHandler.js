@@ -1,10 +1,11 @@
 var ResizeHandler = {
     active: false,
     element: null,
-    onStopTimer: null,
+    onEndWaitTime: 500,
+    onEndTimer: null,
     callbacks: {
         onResize: [],
-        onResizeStop: [],
+        onResizeEnd: [],
     },
     initialize: function() {
         if (ResizeHandler.active == true) {
@@ -12,25 +13,37 @@ var ResizeHandler = {
         }
 
         ResizeHandler.element = $(window);
-        ResizeHandler.element.on('resize', ResizeHandler.onResize);
+        ResizeHandler.element.on('resize', ResizeHandler.triggered);
         ResizeHandler.active = true;
     },
-    onResize: function() {
-        ResizeHandler.element.trigger('ResizeHandler-Resize')
-        //On Resize Stop
-        clearTimeout(ResizeHandler.onStopTimer);
-        ResizeHandler.onStopTimer = setTimeout(ResizeHandler.onResizeStop, 300);
+    triggered: function(event) {
+        var $this = $(this)
+        var callbacks = ResizeHandler.callbacks;
 
-        var callbacks = ResizeHandler.callbacks.onResize;
-        for (var i in callbacks) {
-            callbacks[i](ResizeHandler.element);
+        //onResize
+        for (var i in callbacks.onResize) {
+            callbacks.onResize[i]($this, event);
         }
+
+        //onResizeEnd
+        clearTimeout(ResizeHandler.onEndTimer);
+        ResizeHandler.onEndTimer = setTimeout(function() {
+            for (var i in callbacks.onResizeEnd) {
+                callbacks.onResizeEnd[i]($this, event);
+            }
+        }, ResizeHandler.onEndWaitTime);
     },
     onResizeStop: function() {
-        ResizeHandler.element.trigger('ResizeHandler-ResizeStop');
-        var callbacks = ResizeHandler.callbacks.onResizeStop;
-        for (var i in callbacks) {
-            callbacks[i](ResizeHandler.element);
+
+    },
+    onResize: function(callback) {
+        if (typeof callback == 'function') {
+            ResizeHandler.callbacks.onResize.push(callback);
+        }
+    },
+    onResizeEnd: function(callback) {
+        if (typeof callback == 'function') {
+            ResizeHandler.callbacks.onResizeEnd.push(callback);
         }
     },
     callback: function(callback, type) {
