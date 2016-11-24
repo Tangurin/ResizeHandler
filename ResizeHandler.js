@@ -47,11 +47,6 @@
             if (typeof callback == 'function') {
                 ResizeHandler.callbacks.onResizeEnd.push(callback);
             }
-        },
-        callback: function(callback, type) {
-            var type = type || 'onResize';
-            if (typeof callback == 'function' && typeof ResizeHandler.callbacks[type] != 'undefined') {
-                ResizeHandler.callbacks[type].push(callback);
             }
         }
     };
