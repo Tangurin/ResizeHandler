@@ -38,15 +38,22 @@
                 }
             }, ResizeHandler.onEndWaitTime);
         },
-        onResize: function(callback) {
+        onResize: function(callback, run) {
+            var run = run || false;
             if (typeof callback == 'function') {
                 ResizeHandler.callbacks.onResize.push(callback);
             }
+            if (run === true) {
+                callback(ResizeHandler.element);
+            }
         },
-        onResizeEnd: function(callback) {
+        onResizeEnd: function(callback, run) {
+            var run = run || false;
             if (typeof callback == 'function') {
                 ResizeHandler.callbacks.onResizeEnd.push(callback);
             }
+            if (run === true) {
+                callback(ResizeHandler.element);
             }
         }
     };
